@@ -1,0 +1,8 @@
+body {
+  margin: 0;
+}
+.home-page-addTask-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
