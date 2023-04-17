@@ -2,8 +2,7 @@ import Head from "next/head";
 import clientPromise from "../lib/mongodb";
 import { InferGetServerSidePropsType } from "next";
 import { ObjectId } from "mongodb";
-import ShowListOfTasks from "../../frontend/src/components/ShowListOfTasks";
-import App from "../../frontend/src/App";
+import MyTasksList from "../../frontend/src/components/ShowListOfTasks";
 import Header from "../../frontend/src/components/Header";
 
 export async function getServerSideProps() {
@@ -33,7 +32,7 @@ export async function getServerSideProps() {
   }
 }
 
-export default function Home({
+export default function fetchTasks({
   tasks,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const addTask = async (property: { _id: ObjectId }) => {
@@ -45,19 +44,21 @@ export default function Home({
   };
 
   return (
-    <>
+    <div className="main-container">
       <Head>
         <title>TaskifyMe</title>
         <link rel="icon" href="/favicon.ico"></link>
       </Head>
-      <Header />
-      <ul>
+      <div className="header">
+        <Header />
+      </div>
+      <div className="content">
         {tasks.map((task: any) => (
           <div key={task._id.toString()}>
-            <ShowListOfTasks task={task} addTask={addTask} />
+            <MyTasksList task={task} addTask={addTask} />
           </div>
         ))}
-      </ul>
-    </>
+      </div>
+    </div>
   );
 }

@@ -1,6 +1,5 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-// import { ObjectId } from "../../../backend/node_modules/mongodb";
 
 type showTasksProps = {
   taskname: string;
@@ -15,7 +14,7 @@ type addTaskProps = {
   addTask: (property: { _id: any }) => void;
 };
 
-function ShowListOfTasks({ task, addTask }: addTaskProps) {
+function MyTasksList({ task, addTask }: addTaskProps) {
   const guestName = "Mariusz";
 
   const handleAddTask = async () => {
@@ -23,19 +22,21 @@ function ShowListOfTasks({ task, addTask }: addTaskProps) {
   };
 
   return (
-    <Card className="text-center">
-      <Card.Header>{task.taskname}</Card.Header>
-      <Card.Body>
-        <Card.Title>{task.description}</Card.Title>
-        <Card.Text>{task.deadline}</Card.Text>
-        <Button variant="primary" onClick={handleAddTask}>
-          Dodaj zadanie
-        </Button>
-      </Card.Body>
-      <Card.Footer className="text-muted">{task.priority}</Card.Footer>
-      <Card.Text>{task._id}</Card.Text>
-    </Card>
+    <div>
+      <Card className="text-center">
+        <Card.Header>{task.taskname}</Card.Header>
+        <Card.Body>
+          <Card.Title>{task.description}</Card.Title>
+          <Card.Text>{task.deadline}</Card.Text>
+          <Button variant="primary" onClick={handleAddTask}>
+            Dodaj zadanie
+          </Button>
+        </Card.Body>
+        <Card.Footer>{task.priority}</Card.Footer>
+        <Card.Text>{task._id}</Card.Text>
+      </Card>
+    </div>
   );
 }
 
-export default ShowListOfTasks;
+export default MyTasksList;

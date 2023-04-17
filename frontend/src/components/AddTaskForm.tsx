@@ -29,10 +29,6 @@ function AddNewTaskForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(taskName + ":Task Name");
-    console.log(taskDescription + ":Task Description");
-    console.log(priority + ":Task Priority");
-    console.log(calendarDate + ":Calendar Date");
     setTaskDescription("");
     setTaskName("");
     setTaskName("Low");
