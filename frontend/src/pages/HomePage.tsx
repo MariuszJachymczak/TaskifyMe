@@ -1,27 +1,11 @@
-import { useState } from "react";
-import AddNewTaskForm from "../components/AddTaskForm";
-import Header from "../components/Header";
-import { Button } from "react-bootstrap";
-import "../styles/style.css";
+// import Header from "../components/Header";
 
-function HomePage() {
-  const [showModal, setShowModal] = useState(false);
+// function HomePage() {
+//   return (
+//     <div>
+//       <Header />
+//     </div>
+//   );
+// }
 
-  const handleShowModalButton = () => {
-    setShowModal((prevState) => !prevState);
-  };
-
-  return (
-    <>
-      <Header />
-      <div className="home-page-addTask-button">
-        <Button variant="primary" onClick={handleShowModalButton}>
-          Add Task
-        </Button>
-      </div>
-      <div>{showModal && <AddNewTaskForm />}</div>
-    </>
-  );
-}
-
-export default HomePage;
+// export default HomePage;

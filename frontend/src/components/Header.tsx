@@ -1,8 +1,9 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import AddTaskButton from "./AddTaskButton";
 
 function Header() {
   return (
-    <div className="App bg-dark text-light">
+    <div>
       <header>
         <Container>
           <Row>
@@ -18,6 +19,7 @@ function Header() {
             </Col>
           </Row>
         </Container>
+        <AddTaskButton />
       </header>
     </div>
   );
