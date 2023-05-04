@@ -2,7 +2,7 @@ import Head from "next/head";
 import clientPromise from "../lib/mongodb";
 import { InferGetServerSidePropsType } from "next";
 import { ObjectId } from "mongodb";
-import MyTasksList from "../../frontend/src/components/ShowListOfTasks";
+import ShowListOfTasks from "../../frontend/src/components/ShowListOfTasks";
 import Header from "../../frontend/src/components/Header";
 
 export async function getServerSideProps() {
@@ -55,7 +55,7 @@ export default function fetchTasks({
       <div className="content">
         {tasks.map((task: any) => (
           <div key={task._id.toString()}>
-            <MyTasksList task={task} addTask={addTask} />
+            <ShowListOfTasks task={task} addTask={addTask} />
           </div>
         ))}
       </div>
