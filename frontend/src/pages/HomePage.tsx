@@ -1,11 +1,15 @@
-// import Header from "../components/Header";
 
-// function HomePage() {
-//   return (
-//     <div>
-//       <Header />
-//     </div>
-//   );
-// }
 
-// export default HomePage;
+import Header from "../components/Header";
+import ShowListOfTasks from "../components/ShowListOfTasks";
+
+function HomePage() {
+  return (
+    <div>
+      <Header />
+      <ShowListOfTasks/>
+    </div>
+  );
+}
+
+export default HomePage;

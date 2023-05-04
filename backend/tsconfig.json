@@ -23,7 +23,7 @@
     "pages/top.js",
     "pages/_app.js",
     "pages/_app.js",
-    "express/app.js"
+    "express/app.ts"
   ],
   "exclude": ["node_modules"]
 }
