@@ -8,38 +8,38 @@ let db;
 
 connectToDb((err) => {
   if (!err) {
-    app.listen(3000, () => {
-      console.log("Server running on port 3000");
+    app.listen(5000, () => {
+      console.log("Server running on port 5000");
     });
     db = getDb();
   }
 });
 
-app.get("/books", (req, res) => {
-  const page = req.query.p || 0;
-  const booksPerPage = 3;
+app.get("/tasks", (req, res) => {
+  // const page = req.query.p || 0;
+  // const booksPerPage = 3;
 
-  let books = [];
+  let tasks = [];
 
-  db.collection("books")
+  db.collection("tasks")
     .find()
-    .sort({ author: 1 })
-    .skip(page * booksPerPage)
-    .limit(booksPerPage)
-    .forEach((book) => {
-      books.push(book);
+    .sort({ description: 1 })
+    // .skip(page * booksPerPage)
+    // .limit(booksPerPage)
+    .forEach((task) => {
+      tasks.push(task);
     })
     .then(() => {
-      res.status(200).json(books);
+      res.status(200).json(tasks);
     })
     .catch(() => {
-      res.status(500).json({ error: "Could not fetch books" });
+      res.status(500).json({ error: "Could not fetch tasks" });
     });
 });
 
-app.get("/books/:id", (req, res) => {
+app.get("/tasks/:id", (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
-    db.collection("books")
+    db.collection("tasks")
       .findOne({ _id: ObjectId(req.params.id) })
       .then((doc) => {
         res.status(200).json(doc);
@@ -52,21 +52,21 @@ app.get("/books/:id", (req, res) => {
   }
 });
 
-app.post("/books", (req, res) => {
-  const book = req.body;
-  db.collection("books")
-    .insertOne(book)
+app.post("/tasks", (req, res) => {
+  const task = req.body;
+  db.collection("tasks")
+    .insertOne(task)
     .then((result) => {
       res.status(201).json(result);
     })
     .catch((err) => {
-      res.status(500).json({ err: "Could not create new document" });
+      res.status(500).json({ err: "Could not create new task" });
     });
 });
 
-app.delete("/books/:id", (req, res) => {
+app.delete("/tasks/:id", (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
-    db.collection("books")
+    db.collection("tasks")
       .deleteOne({ _id: ObjectId(req.params.id) })
       .then((doc) => {
         res.status(200).json(doc);
@@ -79,11 +79,11 @@ app.delete("/books/:id", (req, res) => {
   }
 });
 
-app.patch("/books/:id", (req, res) => {
+app.patch("/tasks/:id", (req, res) => {
   const updates = req.body;
 
   if (ObjectId.isValid(req.params.id)) {
-    db.collection("books")
+    db.collection("tasks")
       .updateOne({ _id: ObjectId(req.params.id) }, { $set: updates })
       .then((doc) => {
         res.status(200).json(doc);
