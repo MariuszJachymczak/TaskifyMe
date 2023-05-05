@@ -19,7 +19,7 @@ function ShowListOfTasks() {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch("http://localhost:5000/tasks");
+      const response = await fetch("/tasks");
       const data = await response.json();
       setShowTasks(data);
     } catch (error) {
@@ -29,7 +29,7 @@ function ShowListOfTasks() {
 
   const deleteTask = async (taskId: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+      const response = await fetch(`/tasks/${taskId}`, {
         method: "DELETE",
       });
       const data = await response.json();
@@ -52,7 +52,7 @@ function ShowListOfTasks() {
             <Button  variant="danger" onClick={()=>deleteTask(task._id)}>Delete Task</Button>
           </Card.Body>
           <Card.Footer>{task.priority}</Card.Footer>
-          <Card.Text>{task._id}</Card.Text>
+          {/* <Card.Text>{task._id}</Card.Text> */}
         </Card>
       ))}
     </div>

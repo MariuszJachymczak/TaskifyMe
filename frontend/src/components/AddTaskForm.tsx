@@ -27,11 +27,33 @@ function AddNewTaskForm() {
     setCalendarDate(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setTaskDescription("");
-    setTaskName("");
-    setTaskName("Low");
+    // setTaskDescription("");
+    // setTaskName("");
+    // setTaskName("");
+
+    try {
+      const response = await fetch(`/tasks`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          deadline: calendarDate,
+          description: taskDescription,
+          priority: priority,
+          taskname: taskName,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setTaskName("");
+      } else {
+        throw new Error("Error creating new task");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
