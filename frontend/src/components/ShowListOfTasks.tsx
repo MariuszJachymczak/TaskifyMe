@@ -32,14 +32,18 @@ function ShowListOfTasks() {
       const response = await fetch(`/tasks/${taskId}`, {
         method: "DELETE",
       });
+      if(response.ok){
       const data = await response.json();
+      console.log(data)
       fetchTasks()
+      }else{
+        throw new Error ("Error while deleting task")
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(showTasks);
 
   return (
     <div>
