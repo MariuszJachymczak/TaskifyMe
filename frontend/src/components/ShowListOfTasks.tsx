@@ -1,49 +1,24 @@
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import Card from "react-bootstrap/Card";
-
-type showTasksProps = {
-  taskname: string;
-  priority: string;
-  description: string;
-  deadline: string;
-  _id: any;
-};
+import { Button, Modal, Card } from "react-bootstrap";
+import { showTasksProps, deleteTask, fetchTasks } from "./services/taskHelpers";
 
 function ShowListOfTasks() {
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
   const [showTasks, setShowTasks] = useState<showTasksProps[]>([]);
+  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+  const [selectedTaskId, setSelectedTaskId] = useState<string>("");
 
-  const fetchTasks = async () => {
-    try {
-      const response = await fetch("/tasks");
-      const data = await response.json();
-      setShowTasks(data);
-    } catch (error) {
-      console.log(error);
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      const tasks = await fetchTasks();
+      setShowTasks(tasks);
+    };
+    fetchData();
+  }, [showTasks, showConfirmModal]);
+
+  const handleDeleteConfirmation = (taskId: string) => {
+    setShowConfirmModal(true);
+    setSelectedTaskId(taskId);
   };
-
-  const deleteTask = async (taskId: string) => {
-    try {
-      const response = await fetch(`/tasks/${taskId}`, {
-        method: "DELETE",
-      });
-      if(response.ok){
-      const data = await response.json();
-      console.log(data)
-      fetchTasks()
-      }else{
-        throw new Error ("Error while deleting task")
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
 
   return (
     <div>
@@ -53,12 +28,38 @@ function ShowListOfTasks() {
           <Card.Body>
             <Card.Title>{task.description}</Card.Title>
             <Card.Text>{task.deadline}</Card.Text>
-            <Button  variant="danger" onClick={()=>deleteTask(task._id)}>Delete Task</Button>
+            <Button
+              variant="danger"
+              onClick={() => handleDeleteConfirmation(task._id)}
+            >
+              Delete Task
+            </Button>
           </Card.Body>
           <Card.Footer>{task.priority}</Card.Footer>
-          {/* <Card.Text>{task._id}</Card.Text> */}
         </Card>
       ))}
+      <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Task Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this task?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowConfirmModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() =>
+              deleteTask(selectedTaskId, setSelectedTaskId, setShowConfirmModal)
+            }
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
