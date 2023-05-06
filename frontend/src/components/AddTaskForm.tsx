@@ -48,6 +48,7 @@ function AddNewTaskForm() {
         const data = await response.json();
         console.log(data);
         setTaskName("");
+
       } else {
         throw new Error("Error creating new task");
       }
