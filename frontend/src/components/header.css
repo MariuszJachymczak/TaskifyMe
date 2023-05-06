@@ -1,0 +1,12 @@
+header {
+  position: relative;
+}
+img {
+  max-width: 20%;
+  height: auto;
+}
+.logo {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
